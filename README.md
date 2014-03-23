@@ -43,6 +43,7 @@ exports.down = function() {
 
 }
 ```
+```
 bake migrate [versionNumber - optional]
 ```
 runs a migration from the version specified in `db/schema.js` (defaults to 0 if no file)
