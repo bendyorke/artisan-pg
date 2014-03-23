@@ -1,0 +1,21 @@
+{
+  "name": "artisan-pg",
+  "description": "a lightweight rapper around node-pg",
+  "version": "0.0.6",
+  "author": {
+    "name": "bendyorke"
+  },
+  "engines": {
+    "node": "*"
+  },
+  "bin": {
+    "bake": "./bin/bake.bin.js"
+  },
+  "dependencies": {
+    "pg": "*"
+  },
+  "readme": "#artisan-pg\na lighweight wrapper for node-pg.   \n\n_this is a work in progress, do not attempt to use in a production env_\n\n###works out of the box with the following structure\n```\n+ROOT_DIR\n    +node_modules\n    +db\n        -config.json\n        +seeds\n            -index.js\n        +migrations\n            -index.js\n```\nthe location of these files can be changed in /lib/config.js\n\n###currently supports 5 functions\n\n```\nbake create\n```\ncreates a db with the name specified in `db/config.json`\n```\nbake drop\n```\ndrops a db with the name specified in `db/config.json`\n```\nbake seed\n```\nruns `db/seeds/index.js#seed`\n```\nbake migration [filename]\n```\ncreates a migration file in `db/migrations` with the syntax `[filename]_YYYYMMDDHHMMSS.js` containing the code:\n```\nexports.up = function() {\n\n}\n\nexports.down = function() {\n\n}\n```\nbake migrate [versionNumber - optional]\n```\nruns a migration from the version specified in `db/schema.js` (defaults to 0 if no file)\nruns up or down to the specified version number (runs all the way up if none specified)\nsaves version number in `db/schema.js`\nWARNING: Running this overwrites any content in `db/schema.js` or your specified schemaFile\n\n\n##examples\n###example `db/config.json` file\n```\n{\n  \"global\": \n  {\n    \"username\": \"bendyorke\"\n  , \"password\": \"artisan-pg\"\n  , \"database\": \"postgres\"\n  , \"hostname\": \"localhost\"\n  }\n, \"development\":\n  {\n    \"username\": \"bendyorke\"\n  , \"password\": \"artisan-pg\"\n  , \"database\": \"progress_dev\"\n  , \"hostname\": \"localhost\"\n  }  \n}\n\n```\n###example `db/seeds/index.js` file\n```\nexports.seed = function() {\n  var fs    = require('fs')\n    , path  = require('path')\n\n  fs\n    .readdirSync(__dirname)\n    .filter(function(file) {\n      return ( (file.indexOf('.') !== 0) && \n               (file !== 'index.js')     &&\n               (file.slice(-3) === '.js')   )\n    })\n    .forEach(function(file) {\n      require(path.join(__dirname, file))()\n    })\n}\n```\n",
+  "readmeFilename": "README.md",
+  "_id": "artisan-pg@0.0.6",
+  "_from": "artisan-pg@"
+}
